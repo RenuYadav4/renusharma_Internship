@@ -1,4 +1,5 @@
 import React from 'react';
+import aboutImage from '../assets/aboutbg.jpeg'
 
 const About = () => {
   return (
@@ -6,7 +7,7 @@ const About = () => {
       {/* Hero Image Section */}
       <div className="relative mb-12">
         <img
-          src="src\assets\aboutbg.jpeg"
+          src={aboutImage}
           alt="Internship Hero"
           className="w-full h-72 md:h-[28rem] object-cover rounded-lg shadow-lg transition-transform duration-500 hover:scale-105"
         />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaSearch, FaBriefcase } from 'react-icons/fa';  // Importing search and briefcase icons
 import Testimonials from '../components/Testimonials';
 import About from '../components/About';
-import Profile from '../components/Profile';
+import heroImage from '../assets/heroIntern.png'
 
 const Landing = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,7 +54,7 @@ const Landing = () => {
           {/* Hero Image */}
           <div className="w-full md:w-1/2 lg:mr-[-200px]">
             <img
-              src="src/assets/heroIntern.png"
+              src={heroImage}
               alt="Internship Hero"
               className="w-full h-auto max-w-md mx-auto md:mx-0 rounded-lg shadow-lg transition-transform duration-500 hover:scale-105"
             />
