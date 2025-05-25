@@ -54,7 +54,7 @@ const Landing = () => {
           {/* Hero Image */}
           <div className="w-full md:w-1/2 lg:mr-[-200px]">
             <img
-              src="src/assets/heroIntern.jpeg"
+              src="src/assets/heroIntern.png"
               alt="Internship Hero"
               className="w-full h-auto max-w-md mx-auto md:mx-0 rounded-lg shadow-lg transition-transform duration-500 hover:scale-105"
             />
