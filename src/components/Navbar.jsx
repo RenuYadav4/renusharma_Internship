@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
 import { HiChevronDown, HiMenuAlt3, HiX } from "react-icons/hi";
 import Midnav from './Midnav';
+import logo from '../assets/renusharma-logo.png'
 
 const Navbar = ({ onProfileClick }) => {
-    const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -17,7 +17,7 @@ const Navbar = ({ onProfileClick }) => {
             <div className="flex items-center justify-between h-14 md:h-17">
                 {/* Logo */}
                 <div className="flex items-center">
-                    <img src="src/assets/renusharma-logo.jpg" alt="renusharma_logo" className='h-30 md:h-40' />
+                    <img src={logo} alt="renusharma_logo" className='h-30 md:h-40' />
                     <span className="text-xl md:text-2xl font-extrabold tracking-wide bg-gradient-to-r from-blue-200  to-blue-600 bg-clip-text text-transparent">
                         InternLaunch
                     </span>
@@ -56,10 +56,9 @@ const Navbar = ({ onProfileClick }) => {
 
             {/* Mobile Dropdown Menu */}
             {menuOpen && (
-                <div className="lg:hidden h-[92vh] absolute top-full left-0 w-full py-4 px-6 z-40  bg-[#d1bcca] opacity-80  shadow-lg border border-gray-200 flex flex-col space-y-4">
+                <div className="lg:hidden h-[92vh] absolute top-full left-0 w-full py-4 px-6 z-40  bg-[#d1bcca]   shadow-lg border border-gray-200 flex flex-col space-y-4">
                     <div
                         onClick={() => {
-                            // navigate('/profile');
                             toggleMenu();
                             onProfileClick();
                         }}
