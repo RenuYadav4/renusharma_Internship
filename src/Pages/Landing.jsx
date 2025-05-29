@@ -36,8 +36,8 @@ const Landing = () => {
   return (
     <div>
       {/* Hero Section */}
-      <div className="w-full bg-gradient-to-r from-gray-50 to-gray-100 py-12 px-4 md:px-16">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+      <div className="w-full  bg-gradient-to-r from-gray-50 to-gray-100 py-12 px-4 md:px-16">
+        <div className="flex mt-20 flex-col md:flex-row items-center justify-between gap-8">
           {/* Text Content */}
           <div className="w-full md:w-1/2 text-center md:text-left">
             <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4">

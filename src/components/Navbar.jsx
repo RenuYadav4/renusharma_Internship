@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
 import { HiChevronDown, HiMenuAlt3, HiX } from "react-icons/hi";
@@ -7,13 +7,32 @@ import logo from '../assets/renusharma-logo.png'
 
 const Navbar = ({ onProfileClick }) => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef();
+
+    // close menu on clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setMenuOpen(false);
+            }
+        };
+
+        if (menuOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } 
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+
+    }, [menuOpen])
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
 
     return (
-        <div className="w-full md:px-6 bg-[#ad819f] rounded-b-xl relative z-50 shadow-[0_8px_20px_rgba(8,_112,_184,_0.5)]">
+        <div className=" w-full md:px-6 bg-[#ad819f] rounded-b-xl fixed z-50 shadow-[0_8px_20px_rgba(8,_112,_184,_0.5)]">
             <div className="flex items-center justify-between h-14 md:h-17">
                 {/* Logo */}
                 <div className="flex items-center">
@@ -56,7 +75,9 @@ const Navbar = ({ onProfileClick }) => {
 
             {/* Mobile Dropdown Menu */}
             {menuOpen && (
-                <div className="lg:hidden h-[92vh] absolute top-full left-0 w-full py-4 px-6 z-40  bg-[#d1bcca]   shadow-lg border border-gray-200 flex flex-col space-y-4">
+                <div
+                    ref={menuRef}
+                    className="lg:hidden h-[70vh] absolute top-full left-0 w-full py-4 px-6 z-40  bg-[#d1bcca]   shadow-lg border border-gray-200 flex flex-col space-y-4">
                     <div
                         onClick={() => {
                             toggleMenu();
@@ -79,7 +100,7 @@ const Navbar = ({ onProfileClick }) => {
                                 Internships
                                 <HiChevronDown className="text-xl" />
                             </button>
-                            <div className="absolute hidden group-hover:block  bg-gray-200 inset-shadow-sm inset-shadow-indigo-500 rounded-lg p-3 w-48 mt-2 border border-gray-100">
+                            <div className="absolute hidden group-hover:block bg-gray-200 inset-shadow-sm inset-shadow-indigo-500 rounded-lg p-3 w-48 mt-2 border border-gray-100">
                                 <ul className="text-[#41213f]">
                                     <li className="py-2 px-4 hover:bg-[#e0f2f1]">Technical</li>
                                     <li className="py-2 px-4 hover:bg-[#e0f2f1]">Marketing</li>
