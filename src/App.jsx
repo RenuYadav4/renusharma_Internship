@@ -5,6 +5,11 @@ import Signup from "./Pages/Signup"
 import Login from "./Pages/Login"
 import Profile from "./components/Profile"
 import { useEffect, useRef, useState } from "react"
+import InternshipDetails from "./components/InternshipDetails"
+import internshipData from './data/internship.json';
+import InternshipListing from "./components/InternshipListing"
+import Contact from "./components/Contact"
+
 
 
 function App() {
@@ -47,6 +52,9 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/internship/:id" element={<InternshipDetails internships={internshipData} />} />
+        <Route path="/internships" element={<InternshipListing />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
 
        {/* Profile Sidebar Overlay*/}

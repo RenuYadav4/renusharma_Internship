@@ -8,6 +8,55 @@ import logo from '../assets/renusharma-logo.png'
 const Navbar = ({ onProfileClick }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef();
+    const navigate = useNavigate();
+
+    // Scroll to About section on landing page
+    const scrollToAbout = () => {
+        const aboutSection = document.getElementById('about-section');
+    
+        if (window.location.pathname !== '/') {
+            // Navigate to the homepage first
+            navigate('/');
+    
+            // After navigation, wait for a while before scrolling
+            setTimeout(() => {
+                if (aboutSection) {
+                    // Slow scroll with smooth behavior
+                    slowScrollTo(aboutSection);
+                }
+            }, 100); // Delay before scrolling after navigating
+        } else {
+            // If already on the homepage, scroll smoothly
+            if (aboutSection) {
+                slowScrollTo(aboutSection);
+            }
+        }
+    
+        setMenuOpen(false);
+    };
+    
+    // Slow scroll function to create a more noticeable scroll effect
+    const slowScrollTo = (element) => {
+        const scrollInterval = 16; // Interval time for the scroll effect (roughly 60fps)
+        const totalScrollDistance = element.offsetTop - window.pageYOffset;
+        const step = totalScrollDistance / 30; // Divide the scroll distance into 100 steps
+    
+        let currentScroll = 0;
+    
+        // Smooth scroll with gradual steps
+        const scroll = () => {
+            if (Math.abs(currentScroll) < Math.abs(totalScrollDistance)) {
+                window.scrollBy(0, step); // Scroll by a small amount at each step
+                currentScroll += step;
+                setTimeout(scroll, scrollInterval); // Repeat the scroll action at intervals
+            } else {
+                window.scrollTo(0, element.offsetTop); // Make sure we arrive at the final position
+            }
+        };
+    
+        scroll(); // Initiate the scroll effect
+    };
+    
 
     // close menu on clicking outside
     useEffect(() => {
@@ -48,6 +97,22 @@ const Navbar = ({ onProfileClick }) => {
                 <div className="hidden text-[#f3f1f1] lg:flex items-center gap-6 lg:gap-10 font-semibold text-base font-serif">
                     <Link to="/" className="relative group hover:text-[#41213f] transition duration-300">
                         Home
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#41213f] group-hover:w-full transition-all duration-300"></span>
+                    </Link>
+                    <Link to="/internships" className="relative group hover:text-[#41213f] transition duration-300">
+                        Internships
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#41213f] group-hover:w-full transition-all duration-300"></span>
+                    </Link>
+                    <button 
+                      onClick={scrollToAbout}
+                      className="relative group hover:text-[#41213f] transition duration-300 bg-transparent border-none cursor-pointer"
+                      style={{ outline: 'none' }}
+                    >
+                        About
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#41213f] group-hover:w-full transition-all duration-300"></span>
+                    </button>
+                    <Link to="/contact" className="relative group hover:text-[#41213f] transition duration-300">
+                        Contact
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#41213f] group-hover:w-full transition-all duration-300"></span>
                     </Link>
                     <Link to="/signup" className="relative group hover:text-[#41213f] transition duration-300">
@@ -94,7 +159,7 @@ const Navbar = ({ onProfileClick }) => {
                     {/* other options */}
                     <div>
                         {/* Internships Dropdown */}
-                        <div className="relative group">
+                        {/* <div className="relative group">
                             <button className="w-full py-2 px-3 rounded-md flex items-center gap-2 text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                             >
                                 Internships
@@ -107,10 +172,10 @@ const Navbar = ({ onProfileClick }) => {
                                     <li className="py-2 px-4 hover:bg-[#e0f2f1]">Bussiness</li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Resources Dropdown */}
-                        <div className="relative group">
+                        {/* <div className="relative group">
                             <button className="w-full py-2 px-3 rounded-md flex items-center gap-2 text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                             >
                                 Resources
@@ -123,10 +188,10 @@ const Navbar = ({ onProfileClick }) => {
                                     <li className="py-2 px-4 hover:bg-[#e0f2f1]">Help Center</li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* About Us Dropdown */}
-                        <div className="relative group">
+                        {/* <div className="relative group">
                             <button className="w-full py-2 px-3 rounded-md flex items-center gap-2 text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                             >
                                 About Us
@@ -139,14 +204,34 @@ const Navbar = ({ onProfileClick }) => {
                                     <li className="py-2 px-4 hover:bg-[#e0f2f1]">Careers</li>
                                 </ul>
                             </div>
-                        </div>
-                    </div>
+                        </div> */}
+                    </div> 
                     <Link
                         to="/"
                         onClick={toggleMenu}
                         className="w-full py-2 px-3 rounded-md text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
                     >
                         Home
+                    </Link>
+                    <Link
+                        to="/internships"
+                        onClick={toggleMenu}
+                        className="w-full py-2 px-3 rounded-md text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Internships
+                    </Link>
+                    <button
+                        onClick={scrollToAbout}
+                        className="w-full text-left py-2 px-3 rounded-md text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
+                    >
+                        About
+                    </button>
+                    <Link
+                        to="/contact"
+                        onClick={toggleMenu}
+                        className="w-full py-2 px-3 rounded-md text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Contact
                     </Link>
                     <Link
                         to="/signup"
