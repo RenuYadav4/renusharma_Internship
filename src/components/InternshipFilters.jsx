@@ -15,17 +15,17 @@ const InternshipFilters = ({ internships, onFilter }) => {
         internship.title.toLowerCase().includes(query) ||
         internship.company.toLowerCase().includes(query);
 
-      const matchesLocation = selectedLocation
-        ? internship.location.toLowerCase() === selectedLocation.toLowerCase()
-        : true;
+      // const matchesLocation = selectedLocation
+      //   ? internship.location.toLowerCase() === selectedLocation.toLowerCase()
+      //   : true;
+      const matchesLocation = selectedLocation.includes(internship.location);
 
-      const matchesDuration = selectedDuration
-        ? internship.duration.toLowerCase().includes(selectedDuration.toLowerCase())
-        : true;
+      const matchesDuration = selectedDuration.includes(internship.duration);
+       
 
-      const matchesWorkType = selectedWorkType
-        ? internship.workType?.toLowerCase() === selectedWorkType.toLowerCase()
-        : true;
+      // const matchesWorkType = selectedWorkType
+      //   ? internship.workType?.toLowerCase() === selectedWorkType.toLowerCase()
+      //   : true;
 
       const matchesStipend =
         minStipend !== ""

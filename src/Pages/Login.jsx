@@ -66,6 +66,7 @@ const Login = () => {
                   type="email"
                   id="email"
                   name="email"
+                  value={email}
                   onChange={handleInput}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
                 />
@@ -81,6 +82,7 @@ const Login = () => {
                   type="password"
                   id="password"
                   name="password"
+                  value={password}
                   onChange={handleInput}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
                 />

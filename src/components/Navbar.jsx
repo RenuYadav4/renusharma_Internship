@@ -9,6 +9,8 @@ const Navbar = ({ onProfileClick }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef();
     const navigate = useNavigate();
+     
+    
 
     // Scroll to About section on landing page
     const scrollToAbout = () => {
