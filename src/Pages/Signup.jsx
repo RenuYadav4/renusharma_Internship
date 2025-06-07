@@ -34,6 +34,7 @@ const navigate = useNavigate();
 
       // set or store data into localstorage
       localStorage.setItem("user", JSON.stringify(arr));
+      window.dispatchEvent(new Event("user-login"));
       alert("Signed up successfully !!");
       navigate("/login");
     }
@@ -42,7 +43,7 @@ const navigate = useNavigate();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-4 py-8">
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between w-full max-w-6xl gap-10">
+      <div className="flex mt-10 flex-col-reverse md:flex-row items-center justify-between w-full max-w-6xl gap-10">
 
         {/* Left: Signup Form */}
         <div className="bg-gray-900 border border-gray-700 p-8 sm:p-10 rounded-3xl shadow-2xl w-full max-w-md">
@@ -65,7 +66,7 @@ const navigate = useNavigate();
                 />
                 <label
                   htmlFor="name"
-                  className="absolute left-4 top-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-2 peer-focus:text-sm peer-focus:text-gray-300"
+                  className="absolute left-4 top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-2 peer-focus:text-sm peer-focus:text-gray-300"
                 >
                   Enter your name
                 </label>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -20,36 +20,62 @@ const Login = () => {
     }
   }
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+
+
+  //   // verfiy the data entered if exists already in the localstorage.
+  //   let getDetails = JSON.parse(localStorage.getItem("user"))
+  //   console.log(getDetails);
+  //   getDetails.map((curUser) => {
+  //     let storeEmail = curUser.email;
+  //     let storePassword = curUser.password;
+
+  //     // compare the input values enterd by user now with the values stored in the local storage
+  //     if (storeEmail == email && storePassword == password) {
+  //       alert("logged in Successfully !!")
+  //       navigate("/");
+  //     } else {
+  //       return setMessage("Invalid Email or password")
+  //     }
+
+  //   })
+  // }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const users = JSON.parse(localStorage.getItem("user")) || [];
 
+    console.log(users);
 
-    // verfiy the data entered if exists already in the localstorage.
-    let getDetails = JSON.parse(localStorage.getItem("user"))
+    // user who matches
+    const matchedUser = users.find((user) => (
+      user.email === email && user.password === password
+    ));
+    console.log(matchedUser);
 
-    getDetails.map((curUser) => {
-      let storeEmail = curUser.email;
-      let storePassword = curUser.password;
-
-      // compare the input values enterd by user now with the values stored in the local storage
-      if (storeEmail == email && storePassword == password) {
-        alert("logged in Successfully !!")
+    if (matchedUser) {
+      localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
+      window.dispatchEvent(new Event("user-login"));
+      setMessage("Logged in successfully!!!");
+      setTimeout(() => {
         navigate("/");
-      } else {
-        return setMessage("Invalid Email or password")
-      }
+      }, 1000);
 
-    })
+    } else {
+      setMessage("Invalid email or password");
+    }
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-4 py-8">
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between w-full max-w-6xl gap-10">
+      <div className="flex mt-5 flex-col-reverse md:flex-row items-center justify-between w-full max-w-6xl gap-10">
 
         {/* Left: Simple Light Login Card */}
-        <div className="bg-white p-8 sm:p-10 rounded-3xl shadow-xl w-full max-w-md">
-          <p>{message}</p>
+        <div className="bg-white  p-8 sm:p-10 rounded-3xl shadow-xl w-full max-w-md">
+          <p className='text-[#a9558a]'>{message}</p>
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <p className="text-3xl font-bold text-center text-gray-800">Login</p>

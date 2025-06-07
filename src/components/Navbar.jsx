@@ -9,17 +9,43 @@ const Navbar = ({ onProfileClick }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef();
     const navigate = useNavigate();
-     
-    
+
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const checkLogin = () => {
+            const user = JSON.parse(localStorage.getItem("loggedInUser"));
+            setLoggedIn(!!user);
+        };
+
+        checkLogin(); // initial check
+
+        // Listen for login/logout events
+        window.addEventListener("user-login", checkLogin);
+        window.addEventListener("user-logout", checkLogin);
+
+        return () => {
+            window.removeEventListener("user-login", checkLogin);
+            window.removeEventListener("user-logout", checkLogin);
+        };
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("loggedInUser");
+        setLoggedIn(false);
+        window.dispatchEvent(new Event("user-logout"));
+        navigate("/login");
+    };
+
 
     // Scroll to About section on landing page
     const scrollToAbout = () => {
         const aboutSection = document.getElementById('about-section');
-    
+
         if (window.location.pathname !== '/') {
             // Navigate to the homepage first
             navigate('/');
-    
+
             // After navigation, wait for a while before scrolling
             setTimeout(() => {
                 if (aboutSection) {
@@ -33,18 +59,18 @@ const Navbar = ({ onProfileClick }) => {
                 slowScrollTo(aboutSection);
             }
         }
-    
+
         setMenuOpen(false);
     };
-    
+
     // Slow scroll function to create a more noticeable scroll effect
     const slowScrollTo = (element) => {
         const scrollInterval = 16; // Interval time for the scroll effect (roughly 60fps)
         const totalScrollDistance = element.offsetTop - window.pageYOffset;
         const step = totalScrollDistance / 30; // Divide the scroll distance into 100 steps
-    
+
         let currentScroll = 0;
-    
+
         // Smooth scroll with gradual steps
         const scroll = () => {
             if (Math.abs(currentScroll) < Math.abs(totalScrollDistance)) {
@@ -55,10 +81,10 @@ const Navbar = ({ onProfileClick }) => {
                 window.scrollTo(0, element.offsetTop); // Make sure we arrive at the final position
             }
         };
-    
+
         scroll(); // Initiate the scroll effect
     };
-    
+
 
     // close menu on clicking outside
     useEffect(() => {
@@ -70,7 +96,7 @@ const Navbar = ({ onProfileClick }) => {
 
         if (menuOpen) {
             document.addEventListener("mousedown", handleClickOutside);
-        } 
+        }
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
@@ -105,10 +131,10 @@ const Navbar = ({ onProfileClick }) => {
                         Internships
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#41213f] group-hover:w-full transition-all duration-300"></span>
                     </Link>
-                    <button 
-                      onClick={scrollToAbout}
-                      className="relative group hover:text-[#41213f] transition duration-300 bg-transparent border-none cursor-pointer"
-                      style={{ outline: 'none' }}
+                    <button
+                        onClick={scrollToAbout}
+                        className="relative group hover:text-[#41213f] transition duration-300 bg-transparent border-none cursor-pointer"
+                        style={{ outline: 'none' }}
                     >
                         About
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#41213f] group-hover:w-full transition-all duration-300"></span>
@@ -117,7 +143,7 @@ const Navbar = ({ onProfileClick }) => {
                         Contact
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#41213f] group-hover:w-full transition-all duration-300"></span>
                     </Link>
-                    <Link to="/signup" className="relative group hover:text-[#41213f] transition duration-300">
+                    {/* <Link to="/signup" className="relative group hover:text-[#41213f] transition duration-300">
                         Create Account
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#41213f] group-hover:w-full transition-all duration-300"></span>
                     </Link>
@@ -125,7 +151,19 @@ const Navbar = ({ onProfileClick }) => {
                     <Link to="/login" className="relative group hover:text-[#41213f] transition duration-300">
                         Login
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#41213f] group-hover:w-full transition-all duration-300"></span>
-                    </Link>
+                    </Link> */}
+
+                    {/* condtionally render */}
+                    {loggedIn ? (
+                        <button onClick={handleLogout} className="text-white hover:underline">
+                            Logout
+                        </button>
+                    ) : (
+                        <Link to="/login" className="text-white hover:underline">
+                            Login
+                        </Link>
+                    )}
+
 
                     <CgProfile
                         // onClick={() => navigate('/profile')}
@@ -152,7 +190,7 @@ const Navbar = ({ onProfileClick }) => {
                         }}
                         className="w-full text-2xl py-2 px-3 rounded-md flex items-center gap-2 text-[#41213f] font-bold hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                     >
-                        <CgProfile
+                        <CgProfile 
                             className="text-2xl text-[#41213f]" />
                         <span>Profile</span>
                     </div>
@@ -207,7 +245,7 @@ const Navbar = ({ onProfileClick }) => {
                                 </ul>
                             </div>
                         </div> */}
-                    </div> 
+                    </div>
                     <Link
                         to="/"
                         onClick={toggleMenu}
@@ -235,21 +273,31 @@ const Navbar = ({ onProfileClick }) => {
                     >
                         Contact
                     </Link>
-                    <Link
-                        to="/signup"
-                        onClick={toggleMenu}
-                        className="w-full py-2 px-3 rounded-md text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
-                    >
-                        Create Account
-                    </Link>
 
-                    <Link
-                        to="/login"
-                        onClick={toggleMenu}
-                        className="w-full py-2 px-3 rounded-md text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
-                    >
-                        Login
-                    </Link>
+                    {loggedIn ? (
+                        <button
+                            onClick={() => {
+                                handleLogout();
+                                toggleMenu();
+                            }}
+                            className="w-full py-2 px-3 rounded-md text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 text-left"
+                        >
+                            Logout
+                        </button>
+                    ) : (
+                        <>
+
+
+                            <Link
+                                to="/login"
+                                onClick={toggleMenu}
+                                className="w-full py-2 px-3 rounded-md text-[#41213f] text-xl font-medium hover:bg-[#f7f7f7] hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
+                            >
+                                Login
+                            </Link>
+                        </>
+                    )}
+
                 </div>
             )}
         </div>
